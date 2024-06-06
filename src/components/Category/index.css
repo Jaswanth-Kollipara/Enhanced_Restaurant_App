@@ -1,0 +1,9 @@
+.active-tab {
+  color: orange;
+  border-bottom: 3px solid orange;
+}
+
+.tab {
+  font-size: 10px;
+  margin-right: 10px;
+}
