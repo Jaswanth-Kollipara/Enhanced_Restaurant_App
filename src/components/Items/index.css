@@ -43,3 +43,14 @@
 .p1 {
   color: blue;
 }
+.red {
+  color: red;
+}
+.green {
+  color: green;
+}
+.b2{
+  background-color: green;
+  border: none;
+  color: white;
+}

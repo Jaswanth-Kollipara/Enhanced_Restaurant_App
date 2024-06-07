@@ -17,6 +17,7 @@ class Home extends Component {
     apiStatus: apiStatusConstants.initial,
     actCatigory: '11',
     dishCount: [],
+    count: 0,
   }
 
   componentDidMount() {
@@ -76,46 +77,58 @@ class Home extends Component {
 
   increment = id => {
     const {dishCount} = this.state
-    const c = dishCount.filter(item => item.id === id)
+    const c = dishCount.find(item => item.id === id)
     if (c === undefined) {
       const val = {id, quantity: 1}
-      this.setState(prevState => ({dishCount: {...prevState.dishCount, val}}))
+      this.setState(prevState => ({
+        dishCount: [...prevState.dishCount, val],
+        count: prevState.count + 1,
+      }))
     } else {
       const updatedCart = dishCount.map(item => {
         if (item.id === id) {
           let {quantity} = item
-          quantity = quantity + 1
+          quantity += 1
           return {...item, quantity}
         }
         return item
       })
-      this.setState({dishCount: updatedCart})
+      this.setState(prevState => ({
+        dishCount: updatedCart,
+        count: prevState.count + 1,
+      }))
     }
   }
 
   decrement = id => {
     const {dishCount} = this.state
-    const c = dishCount.filter(item => item.id === id)
-    if (c === undefined) {
+    const c = dishCount.find(item => item.id === id)
+    if (c.length === 0) {
       const val = {id, quantity: 0}
-      this.setState(prevState => ({dishCount: {...prevState.dishCount, val}}))
+      this.setState(prevState => ({
+        dishCount: [...prevState.dishCount, val],
+        count: prevState.count - 1,
+      }))
     } else if (c.quantity === 0) {
       this.setState({dishCount})
     } else {
       const updatedCart = dishCount.map(item => {
         if (item.id === id) {
           let {quantity} = item
-          quantity = quantity - 1
+          quantity -= 1
           return {...item, quantity}
         }
         return item
       })
-      this.setState({dishCount: updatedCart})
+      this.setState(prevState => ({
+        dishCount: updatedCart,
+        count: prevState.count - 1,
+      }))
     }
   }
 
   renderProductsListView = () => {
-    const {itemList, actCatigory, dishCount} = this.state
+    const {itemList, actCatigory, dishCount, count} = this.state
     const categoryList = itemList.tableMenuList.filter(
       item => item.menuCategoryId === actCatigory,
     )
@@ -124,7 +137,10 @@ class Home extends Component {
       <div>
         <div className="main">
           <h1>{itemList.restaurantName}</h1>
-          <p>My Orders</p>
+          <div className="con-in">
+            <p>My Orders</p>
+            <p className="pa">{count}</p>
+          </div>
         </div>
         <ul className="ul1">
           {itemList.tableMenuList.map(item => (

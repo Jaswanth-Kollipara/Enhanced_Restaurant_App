@@ -14,3 +14,11 @@
   justify-content: space-between;
   padding-right: 10px;
 }
+
+.con-in {
+  display: flex;
+}
+
+.pa{
+  margin-left: 5px;
+}

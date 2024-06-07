@@ -1,4 +1,3 @@
-import {AiOutlinePlus, AiOutlineMinus} from 'react-icons/ai'
 import './index.css'
 
 const Items = props => {
@@ -12,18 +11,17 @@ const Items = props => {
     dishCalories,
     dishDescription,
     dishAvailability,
-    dishType,
     addonCat,
   } = productDetails
-  const c = count.filter(item => item.id === dishId)
+  const c = count.find(item => item.id === dishId)
   let co
-  if (c.length === 0) {
+  if (c === undefined) {
     co = 0
   } else {
     co = c.quantity
   }
   const disp = addonCat.length
-  const disp1 = disp !== 0 ? true : false
+  const disp1 = disp !== 0
   const inc = () => {
     increment(dishId)
   }
@@ -39,9 +37,13 @@ const Items = props => {
         <p className="margin">{dishDescription}</p>
         {dishAvailability && (
           <div className="con margin">
-            <AiOutlineMinus onClick={inc} />
+            <button className="b2" onClick={dec}>
+              -
+            </button>
             <p className="margin">{co}</p>
-            <AiOutlinePlus onClick={dec} />
+            <button className="b2" onClick={inc}>
+              +
+            </button>
           </div>
         )}
         {!dishAvailability && <p className="margin p3">Not Available</p>}

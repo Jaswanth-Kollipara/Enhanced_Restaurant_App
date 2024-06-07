@@ -4,6 +4,7 @@ const Category = props => {
   const {productDetails, isAct, changeActive} = props
   const {menuCategory, menuCategoryId} = productDetails
   const activeTabClassName = isAct ? 'active-tab' : ''
+  const activebuttonClassName = isAct ? 'active-button' : ''
   const onClickTabItem = () => {
     changeActive(menuCategoryId)
   }
@@ -14,7 +15,7 @@ const Category = props => {
       onClick={onClickTabItem}
       className={`tab ${activeTabClassName}`}
     >
-      <h1>{menuCategory}</h1>
+      <button className={`b1 ${activebuttonClassName}`}>{menuCategory}</button>
     </li>
   )
 }
