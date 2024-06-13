@@ -21,7 +21,7 @@ const Items = props => {
     co = c.quantity
   }
   const disp = addonCat.length
-  const disp1 = disp !== 0
+  const disp1 = disp !== 0 ? true : false
   const inc = () => {
     increment(dishId)
   }

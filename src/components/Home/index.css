@@ -17,8 +17,9 @@
 
 .con-in {
   display: flex;
+  align-items: center;
 }
 
-.pa{
+.pa {
   margin-left: 5px;
 }
