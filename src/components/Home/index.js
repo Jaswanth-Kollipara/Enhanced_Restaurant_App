@@ -1,7 +1,11 @@
 import {Component} from 'react'
+import {Link, withRouter} from 'react-router-dom'
+import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
+import {AiOutlineShoppingCart} from 'react-icons/ai'
 import Category from '../Category'
 import Items from '../Items'
+import CartContext from '../../context/CartContext'
 import './index.css'
 
 const apiStatusConstants = {
@@ -16,12 +20,16 @@ class Home extends Component {
     itemList: {},
     apiStatus: apiStatusConstants.initial,
     actCatigory: '11',
-    dishCount: [],
-    count: 0,
   }
 
   componentDidMount() {
     this.getProducts()
+  }
+
+  onClickLogout = () => {
+    const {history} = this.props
+    Cookies.remove('jwt_token')
+    history.replace('/login')
   }
 
   getProducts = async () => {
@@ -57,6 +65,7 @@ class Home extends Component {
             dishType: val1.dish_Type,
             nexturl: val1.nexturl,
             addonCat: val1.addonCat,
+            quantity: 0,
           })),
         })),
       }))
@@ -75,73 +84,57 @@ class Home extends Component {
     this.setState({actCatigory: val})
   }
 
-  increment = id => {
-    const {dishCount} = this.state
-    const c = dishCount.find(item => item.id === id)
-    if (c === undefined) {
-      const val = {id, quantity: 1}
-      this.setState(prevState => ({
-        dishCount: [...prevState.dishCount, val],
-        count: prevState.count + 1,
-      }))
-    } else {
-      const updatedCart = dishCount.map(item => {
-        if (item.id === id) {
-          let {quantity} = item
-          quantity += 1
-          return {...item, quantity}
-        }
-        return item
-      })
-      this.setState(prevState => ({
-        dishCount: updatedCart,
-        count: prevState.count + 1,
-      }))
-    }
-  }
+  renderCartItemsCount = () => (
+    <CartContext.Consumer>
+      {value => {
+        const {cartList} = value
+        const cartItemsCount = cartList.length
 
-  decrement = id => {
-    const {dishCount} = this.state
-    const c = dishCount.find(item => item.id === id)
-    if (c.length === 0) {
-      const val = {id, quantity: 0}
-      this.setState(prevState => ({
-        dishCount: [...prevState.dishCount, val],
-        count: prevState.count - 1,
-      }))
-    } else if (c.quantity === 0) {
-      this.setState({dishCount})
-    } else {
-      const updatedCart = dishCount.map(item => {
-        if (item.id === id) {
-          let {quantity} = item
-          quantity -= 1
-          return {...item, quantity}
-        }
-        return item
-      })
-      this.setState(prevState => ({
-        dishCount: updatedCart,
-        count: prevState.count - 1,
-      }))
-    }
-  }
+        return (
+          <>
+            {cartItemsCount > 0 ? (
+              <span className="cart-count-badge">{cartList.length}</span>
+            ) : null}
+          </>
+        )
+      }}
+    </CartContext.Consumer>
+  )
 
   renderProductsListView = () => {
-    const {itemList, actCatigory, dishCount, count} = this.state
+    const {itemList, actCatigory} = this.state
     const categoryList = itemList.tableMenuList.filter(
       item => item.menuCategoryId === actCatigory,
     )
     const [cat] = categoryList
+
     return (
       <div>
-        <div className="main">
-          <h1>{itemList.restaurantName}</h1>
-          <div className="con-in">
-            <p>My Orders</p>
-            <p className="pa">{count}</p>
+        <nav>
+          <div className="main">
+            <ul className="nav-ul">
+              <li>
+                <Link to="/" className="nav-link">
+                  <h1>{itemList.restaurantName}</h1>
+                </Link>
+              </li>
+              <li>
+                <Link to="/cart" className="nav-link">
+                  <p className="pa">My Orders</p>
+                  <AiOutlineShoppingCart className="nav-icon" />
+                  {this.renderCartItemsCount}
+                </Link>
+              </li>
+            </ul>
+            <button
+              type="button"
+              className="logout-desktop-btn"
+              onClick={this.onClickLogout}
+            >
+              Logout
+            </button>
           </div>
-        </div>
+        </nav>
         <ul className="ul1">
           {itemList.tableMenuList.map(item => (
             <Category
@@ -154,13 +147,7 @@ class Home extends Component {
         </ul>
         <ul className="ul2">
           {cat.categoryDishes.map(item => (
-            <Items
-              productDetails={item}
-              key={item.dishId}
-              count={dishCount}
-              increment={this.increment}
-              decrement={this.decrement}
-            />
+            <Items productDetails={item} key={item.dishId} />
           ))}
         </ul>
       </div>
@@ -199,4 +186,4 @@ class Home extends Component {
   }
 }
 
-export default Home
+export default withRouter(Home)

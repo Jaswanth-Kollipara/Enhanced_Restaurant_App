@@ -56,7 +56,10 @@ class App extends Component {
       this.setState(prevState => ({
         cartList: prevState.cartList.map(eachContact => {
           if (product.id === eachContact.id) {
-            return {...eachContact, quantity: prevState.quantity + 1}
+            return {
+              ...eachContact,
+              quantity: prevState.quantity + product.quantity,
+            }
           }
           return eachContact
         }),

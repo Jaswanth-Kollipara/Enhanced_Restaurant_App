@@ -15,7 +15,9 @@ const Category = props => {
       onClick={onClickTabItem}
       className={`tab ${activeTabClassName}`}
     >
-      <button className={`b1 ${activebuttonClassName}`}>{menuCategory}</button>
+      <button type="button" className={`b1 ${activebuttonClassName}`}>
+        {menuCategory}
+      </button>
     </li>
   )
 }
