@@ -20,6 +20,7 @@ class Home extends Component {
     itemList: {},
     apiStatus: apiStatusConstants.initial,
     actCatigory: '11',
+    dishCount: [],
   }
 
   componentDidMount() {
@@ -89,6 +90,7 @@ class Home extends Component {
       {value => {
         const {cartList} = value
         const cartItemsCount = cartList.length
+        console.log(cartItemsCount)
 
         return (
           <>
@@ -101,8 +103,54 @@ class Home extends Component {
     </CartContext.Consumer>
   )
 
+  increment = id => {
+    const {dishCount} = this.state
+    const c = dishCount.find(item => item.id === id)
+    if (c === undefined) {
+      const val = {id, quantity: 1}
+      this.setState(prevState => ({
+        dishCount: [...prevState.dishCount, val],
+        count: prevState.count + 1,
+      }))
+    } else {
+      const updatedCart = dishCount.map(item => {
+        if (item.id === id) {
+          let {quantity} = item
+          quantity += 1
+          return {...item, quantity}
+        }
+        return item
+      })
+      this.setState(prevState => ({
+        dishCount: updatedCart,
+        count: prevState.count + 1,
+      }))
+    }
+  }
+
+  decrement = id => {
+    const {dishCount} = this.state
+    const c = dishCount.find(item => item.id === id)
+    if (c === undefined || c.quantity === 0) {
+      this.setState({dishCount})
+    } else {
+      const updatedCart = dishCount.map(item => {
+        if (item.id === id) {
+          let {quantity} = item
+          quantity -= 1
+          return {...item, quantity}
+        }
+        return item
+      })
+      this.setState(prevState => ({
+        dishCount: updatedCart,
+        count: prevState.count - 1,
+      }))
+    }
+  }
+
   renderProductsListView = () => {
-    const {itemList, actCatigory} = this.state
+    const {itemList, actCatigory, dishCount} = this.state
     const categoryList = itemList.tableMenuList.filter(
       item => item.menuCategoryId === actCatigory,
     )
@@ -120,9 +168,11 @@ class Home extends Component {
               </li>
               <li>
                 <Link to="/cart" className="nav-link">
-                  <p className="pa">My Orders</p>
-                  <AiOutlineShoppingCart className="nav-icon" />
-                  {this.renderCartItemsCount}
+                  <button type="button" className="pa">
+                    My Orders
+                    <AiOutlineShoppingCart className="nav-icon" />
+                    {this.renderCartItemsCount}
+                  </button>
                 </Link>
               </li>
             </ul>
@@ -147,7 +197,13 @@ class Home extends Component {
         </ul>
         <ul className="ul2">
           {cat.categoryDishes.map(item => (
-            <Items productDetails={item} key={item.dishId} />
+            <Items
+              productDetails={item}
+              key={item.dishId}
+              dishCount={dishCount}
+              increment={this.increment}
+              decrement={this.decrement}
+            />
           ))}
         </ul>
       </div>
