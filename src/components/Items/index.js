@@ -49,7 +49,8 @@ const Items = props => (
                   <button type="button" className="b2" onClick={dec}>
                     -
                   </button>
-                  <p className="margin">{co}</p>
+                  {co === 0 && <p className="margin">0</p>}
+                  {co !== 0 && <p className="margin">{co}</p>}
                   <button type="button" className="b2" onClick={inc}>
                     +
                   </button>

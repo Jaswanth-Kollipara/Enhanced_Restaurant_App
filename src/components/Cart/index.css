@@ -1,5 +1,6 @@
 .cart-container {
   width: 100%;
+  padding: 10px;
 }
 
 .cart-empty-view-container {
@@ -39,4 +40,24 @@
 .cart-list {
   padding-left: 0px;
   list-style-type: none;
+}
+
+.cart-con {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.cart-heading {
+  color: #3e4c59;
+  font-family: 'Roboto';
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.cart-remove-all {
+  text-align: right;
+  border: none;
+  color: blue;
+  background-color: transparent;
 }

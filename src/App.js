@@ -17,15 +17,15 @@ class App extends Component {
 
   removeCartItem = id => {
     const {cartList} = this.state
-    const updatedCart = cartList.filter(item => item.id !== id)
+    const updatedCart = cartList.filter(item => item.dishId !== id)
     this.setState({cartList: updatedCart})
   }
 
   incrementCartItemQuantity = id => {
     this.setState(prevState => ({
       cartList: prevState.cartList.map(eachContact => {
-        if (id === eachContact.id) {
-          return {...eachContact, quantity: prevState.quantity + 1}
+        if (id === eachContact.dishId) {
+          return {...eachContact, quantity: eachContact.quantity + 1}
         }
         return eachContact
       }),
@@ -34,12 +34,12 @@ class App extends Component {
 
   decrementCartItemQuantity = id => {
     const {cartList} = this.state
-    const result = cartList.find(item => item.id === id)
+    const result = cartList.find(item => item.dishId === id)
     if (result.quantity > 1) {
       this.setState(prevState => ({
         cartList: prevState.cartList.map(eachContact => {
-          if (id === eachContact.id) {
-            return {...eachContact, quantity: prevState.quantity - 1}
+          if (id === eachContact.dishId) {
+            return {...eachContact, quantity: eachContact.quantity - 1}
           }
           return eachContact
         }),
@@ -51,14 +51,14 @@ class App extends Component {
 
   addCartItem = product => {
     const {cartList} = this.state
-    const result = cartList.find(item => item.id === product.id)
+    const result = cartList.find(item => item.dishId === product.dishId)
     if (result !== undefined) {
       this.setState(prevState => ({
         cartList: prevState.cartList.map(eachContact => {
-          if (product.id === eachContact.id) {
+          if (product.dishId === eachContact.dishId) {
             return {
               ...eachContact,
-              quantity: prevState.quantity + product.quantity,
+              quantity: eachContact.quantity + product.quantity,
             }
           }
           return eachContact

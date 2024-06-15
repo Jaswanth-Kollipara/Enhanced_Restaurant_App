@@ -31,7 +31,7 @@ const cart = () => (
             </div>
           ) : (
             <div className="cart-content-container">
-              <div>
+              <div className="cart-con">
                 <h1 className="cart-heading">My Cart</h1>
                 <button
                   className="cart-remove-all"
@@ -44,7 +44,7 @@ const cart = () => (
               <ul className="cart-list">
                 {cartList.map(eachCartItem => (
                   <CartItem
-                    key={eachCartItem.id}
+                    key={eachCartItem.dishId}
                     cartItemDetails={eachCartItem}
                   />
                 ))}

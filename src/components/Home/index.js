@@ -89,14 +89,11 @@ class Home extends Component {
     <CartContext.Consumer>
       {value => {
         const {cartList} = value
-        const cartItemsCount = cartList.length
-        console.log(cartItemsCount)
+        console.log(cartList.length)
 
         return (
           <>
-            {cartItemsCount > 0 ? (
-              <span className="cart-count-badge">{cartList.length}</span>
-            ) : null}
+            (<span className="cart-count-badge">{cartList.length}</span>)
           </>
         )
       }}
@@ -168,7 +165,7 @@ class Home extends Component {
               </li>
               <li>
                 <Link to="/cart" className="nav-link">
-                  <button type="button" className="pa">
+                  <button type="button" className="pa" data-testid="cart">
                     My Orders
                     <AiOutlineShoppingCart className="nav-icon" />
                     {this.renderCartItemsCount}
