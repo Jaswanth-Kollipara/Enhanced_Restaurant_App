@@ -37,7 +37,6 @@ const CartItem = props => (
                 type="button"
                 className="quantity-controller-button"
                 onClick={onClickMinus}
-                data-testid="minus"
               >
                 +
               </button>
@@ -46,7 +45,6 @@ const CartItem = props => (
                 type="button"
                 className="quantity-controller-button"
                 onClick={onClickPlus}
-                data-testid="plus"
               >
                 -
               </button>
