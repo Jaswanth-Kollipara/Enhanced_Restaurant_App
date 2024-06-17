@@ -83,11 +83,13 @@ class App extends Component {
           decrementCartItemQuantity: this.decrementCartItemQuantity,
         }}
       >
-        <Switch>
-          <Route exact path="/login" component={LoginForm} />
-          <Route exact path="/" component={Home} />
-          <Route exact path="/cart" component={Cart} />
-        </Switch>
+        <div>
+          <Switch>
+            <Route exact path="/login" component={LoginForm} />
+            <Route exact path="/" component={Home} />
+            <Route exact path="/cart" component={Cart} />
+          </Switch>
+        </div>
       </CartContext.Provider>
     )
   }

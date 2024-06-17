@@ -1,11 +1,8 @@
 import {Component} from 'react'
-import {Link, withRouter} from 'react-router-dom'
-import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
-import {AiOutlineShoppingCart} from 'react-icons/ai'
 import Category from '../Category'
 import Items from '../Items'
-import CartContext from '../../context/CartContext'
+import Header from '../Header'
 import './index.css'
 
 const apiStatusConstants = {
@@ -25,12 +22,6 @@ class Home extends Component {
 
   componentDidMount() {
     this.getProducts()
-  }
-
-  onClickLogout = () => {
-    const {history} = this.props
-    Cookies.remove('jwt_token')
-    history.replace('/login')
   }
 
   getProducts = async () => {
@@ -84,21 +75,6 @@ class Home extends Component {
   changeActive = val => {
     this.setState({actCatigory: val})
   }
-
-  renderCartItemsCount = () => (
-    <CartContext.Consumer>
-      {value => {
-        const {cartList} = value
-        console.log(cartList.length)
-
-        return (
-          <>
-            (<span className="cart-count-badge">{cartList.length}</span>)
-          </>
-        )
-      }}
-    </CartContext.Consumer>
-  )
 
   increment = id => {
     const {dishCount} = this.state
@@ -155,33 +131,7 @@ class Home extends Component {
 
     return (
       <div>
-        <nav>
-          <div className="main">
-            <ul className="nav-ul">
-              <li>
-                <Link to="/" className="nav-link">
-                  <h1>{itemList.restaurantName}</h1>
-                </Link>
-              </li>
-              <li>
-                <Link to="/cart" className="nav-link">
-                  <button type="button" className="pa" data-testid="cart">
-                    My Orders
-                    <AiOutlineShoppingCart className="nav-icon" />
-                    {this.renderCartItemsCount}
-                  </button>
-                </Link>
-              </li>
-            </ul>
-            <button
-              type="button"
-              className="logout-desktop-btn"
-              onClick={this.onClickLogout}
-            >
-              Logout
-            </button>
-          </div>
-        </nav>
+        <Header />
         <ul className="ul1">
           {itemList.tableMenuList.map(item => (
             <Category
@@ -239,4 +189,4 @@ class Home extends Component {
   }
 }
 
-export default withRouter(Home)
+export default Home

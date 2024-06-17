@@ -38,7 +38,7 @@ const CartItem = props => (
                 className="quantity-controller-button"
                 onClick={onClickMinus}
               >
-                +
+                -
               </button>
               <p className="cart-quantity">{quantity}</p>
               <button
@@ -46,7 +46,7 @@ const CartItem = props => (
                 className="quantity-controller-button"
                 onClick={onClickPlus}
               >
-                -
+                +
               </button>
             </div>
             <div className="total-price-remove-container">
