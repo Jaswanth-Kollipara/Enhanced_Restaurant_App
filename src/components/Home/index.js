@@ -28,7 +28,7 @@ class Home extends Component {
     this.setState({
       apiStatus: apiStatusConstants.inProgress,
     })
-    const apiUrl = `https://run.mocky.io/v3/72562bef-1d10-4cf5-bd26-8b0c53460a8e`
+    const apiUrl = `https://run.mocky.io/v3/2477b10c-ee18-4487-9962-1b3d073432c4`
     const response = await fetch(apiUrl)
     if (response.ok) {
       const fetchedData = await response.json()
