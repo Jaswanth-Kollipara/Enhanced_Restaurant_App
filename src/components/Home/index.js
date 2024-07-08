@@ -28,7 +28,7 @@ class Home extends Component {
     this.setState({
       apiStatus: apiStatusConstants.inProgress,
     })
-    const apiUrl = `https://run.mocky.io/v3/2477b10c-ee18-4487-9962-1b3d073432c4`
+    const apiUrl = `https://apis2.ccbp.in/restaurant-app/restaurant-menu-list-details`
     const response = await fetch(apiUrl)
     if (response.ok) {
       const fetchedData = await response.json()
@@ -83,20 +83,15 @@ class Home extends Component {
       const val = {id, quantity: 1}
       this.setState(prevState => ({
         dishCount: [...prevState.dishCount, val],
-        count: prevState.count + 1,
       }))
     } else {
-      const updatedCart = dishCount.map(item => {
-        if (item.id === id) {
-          let {quantity} = item
-          quantity += 1
-          return {...item, quantity}
-        }
-        return item
-      })
       this.setState(prevState => ({
-        dishCount: updatedCart,
-        count: prevState.count + 1,
+        dishCount: prevState.dishCount.map(eachContact => {
+          if (id === eachContact.id) {
+            return {...eachContact, quantity: eachContact.quantity + 1}
+          }
+          return eachContact
+        }),
       }))
     }
   }
@@ -107,17 +102,13 @@ class Home extends Component {
     if (c === undefined || c.quantity === 0) {
       this.setState({dishCount})
     } else {
-      const updatedCart = dishCount.map(item => {
-        if (item.id === id) {
-          let {quantity} = item
-          quantity -= 1
-          return {...item, quantity}
-        }
-        return item
-      })
       this.setState(prevState => ({
-        dishCount: updatedCart,
-        count: prevState.count - 1,
+        dishCount: prevState.dishCount.map(eachContact => {
+          if (id === eachContact.id) {
+            return {...eachContact, quantity: eachContact.quantity - 1}
+          }
+          return eachContact
+        }),
       }))
     }
   }
