@@ -10,6 +10,7 @@ const Header = props => {
     Cookies.remove('jwt_token')
     history.replace('/login')
   }
+  const {headerName} = props
 
   const renderCartItemsCount = () => (
     <CartContext.Consumer>
@@ -34,7 +35,7 @@ const Header = props => {
         <ul className="nav-ul">
           <li>
             <Link to="/" className="nav-link">
-              <h1>UNI Resto Cafe</h1>
+              <h1>{headerName}</h1>
             </Link>
           </li>
           <li>

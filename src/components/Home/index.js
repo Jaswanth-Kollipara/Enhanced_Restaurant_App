@@ -122,7 +122,7 @@ class Home extends Component {
 
     return (
       <div>
-        <Header />
+        <Header headerName={itemList.restaurantName} />
         <ul className="ul1">
           {itemList.tableMenuList.map(item => (
             <Category

@@ -1,6 +1,5 @@
 import {Link} from 'react-router-dom'
 import CartItem from '../CartItem'
-import Header from '../Header'
 import CartContext from '../../context/CartContext'
 import './index.css'
 
@@ -16,7 +15,6 @@ const cart = () => (
 
       return (
         <div className="cart-container">
-          <Header />
           {showEmptyView ? (
             <div className="cart-empty-view-container">
               <img
@@ -35,6 +33,11 @@ const cart = () => (
             <div className="cart-content-container">
               <div className="cart-con">
                 <h1 className="cart-heading">My Cart</h1>
+                <Link to="/">
+                  <button type="button" className="home-btn">
+                    Home
+                  </button>
+                </Link>
                 <button
                   className="cart-remove-all"
                   type="button"

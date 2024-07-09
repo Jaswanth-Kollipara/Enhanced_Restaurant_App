@@ -37,6 +37,13 @@
   cursor: pointer;
 }
 
+.home-btn {
+  color: black;
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+}
+
 .cart-list {
   padding-left: 0px;
   list-style-type: none;
@@ -46,6 +53,7 @@
   display: flex;
   width: 100%;
   justify-content: space-between;
+  align-items: center;
 }
 
 .cart-heading {

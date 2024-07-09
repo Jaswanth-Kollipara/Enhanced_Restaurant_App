@@ -9,6 +9,7 @@ import './App.css'
 class App extends Component {
   state = {
     cartList: [],
+    headerText: '',
   }
 
   removeAllCartItems = () => {
@@ -49,6 +50,10 @@ class App extends Component {
     }
   }
 
+  setHeaderText = text => {
+    this.setState({headerText: text})
+  }
+
   addCartItem = product => {
     const {cartList} = this.state
     const result = cartList.find(item => item.dishId === product.dishId)
@@ -70,12 +75,14 @@ class App extends Component {
   }
 
   render() {
-    const {cartList} = this.state
+    const {cartList, headerText} = this.state
 
     return (
       <CartContext.Provider
         value={{
           cartList,
+          headerText,
+          setHeaderText: this.setHeaderText,
           removeAllCartItems: this.removeAllCartItems,
           addCartItem: this.addCartItem,
           removeCartItem: this.removeCartItem,
