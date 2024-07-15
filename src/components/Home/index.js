@@ -1,5 +1,6 @@
 import {Component} from 'react'
 import Loader from 'react-loader-spinner'
+import Cookies from 'js-cookie'
 import Category from '../Category'
 import Items from '../Items'
 import Header from '../Header'
@@ -119,10 +120,13 @@ class Home extends Component {
       item => item.menuCategoryId === actCatigory,
     )
     const [cat] = categoryList
+    Cookies.set('header_text', itemList.restaurantName, {
+      expires: 30,
+    })
 
     return (
       <div>
-        <Header headerName={itemList.restaurantName} />
+        <Header />
         <ul className="ul1">
           {itemList.tableMenuList.map(item => (
             <Category

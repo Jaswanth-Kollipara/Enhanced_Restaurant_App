@@ -55,13 +55,15 @@ const Items = props => (
                     +
                   </button>
                 </div>
-                <button
-                  type="button"
-                  className="cart-btn"
-                  onClick={renderCartItem}
-                >
-                  ADD TO CART
-                </button>
+                {co > 0 && (
+                  <button
+                    type="button"
+                    className="cart-btn"
+                    onClick={renderCartItem}
+                  >
+                    ADD TO CART
+                  </button>
+                )}
               </div>
             )}
             {!dishAvailability && <p className="margin p3">Not Available</p>}

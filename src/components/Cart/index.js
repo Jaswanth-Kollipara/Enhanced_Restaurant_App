@@ -1,5 +1,6 @@
 import {Link} from 'react-router-dom'
 import CartItem from '../CartItem'
+import Header from '../Header'
 import CartContext from '../../context/CartContext'
 import './index.css'
 
@@ -30,31 +31,29 @@ const cart = () => (
               </Link>
             </div>
           ) : (
-            <div className="cart-content-container">
-              <div className="cart-con">
-                <h1 className="cart-heading">My Cart</h1>
-                <Link to="/">
-                  <button type="button" className="home-btn">
-                    Home
+            <>
+              <Header />
+              <div className="cart-content-container">
+                <div className="cart-con">
+                  <h1 className="cart-heading">My Cart</h1>
+                  <button
+                    className="cart-remove-all"
+                    type="button"
+                    onClick={onClickRemove}
+                  >
+                    Remove All
                   </button>
-                </Link>
-                <button
-                  className="cart-remove-all"
-                  type="button"
-                  onClick={onClickRemove}
-                >
-                  Remove All
-                </button>
+                </div>
+                <ul className="cart-list">
+                  {cartList.map(eachCartItem => (
+                    <CartItem
+                      key={eachCartItem.dishId}
+                      cartItemDetails={eachCartItem}
+                    />
+                  ))}
+                </ul>
               </div>
-              <ul className="cart-list">
-                {cartList.map(eachCartItem => (
-                  <CartItem
-                    key={eachCartItem.dishId}
-                    cartItemDetails={eachCartItem}
-                  />
-                ))}
-              </ul>
-            </div>
+            </>
           )}
         </div>
       )
